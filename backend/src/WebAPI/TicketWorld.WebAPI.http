@@ -1,0 +1,6 @@
+@TicketWorld.WebAPI_HostAddress = http://localhost:5165
+
+GET {{TicketWorld.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

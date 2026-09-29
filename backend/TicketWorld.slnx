@@ -1,0 +1,28 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Application/">
+    <Project Path="src/Application/TicketWorld.Application.csproj" />
+  </Folder>
+  <Folder Name="/src/Domain/">
+    <Project Path="src/Domain/TicketWorld.Domain.csproj" />
+  </Folder>
+  <Folder Name="/src/Infrastructure/">
+    <Project Path="src/Infrastructure/TicketWorld.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/WebAPI/">
+    <Project Path="src/WebAPI/TicketWorld.WebAPI.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
+  <Folder Name="/tests/Application.UnitTests/">
+    <Project Path="tests/Application.UnitTests/TicketWorld.Application.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/tests/Architecture.Tests/">
+    <Project Path="tests/Architecture.Tests/TicketWorld.Architecture.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tests/Domain.UnitTests/">
+    <Project Path="tests/Domain.UnitTests/TicketWorld.Domain.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/tests/WebAPI.IntegrationTests/">
+    <Project Path="tests/WebAPI.IntegrationTests/TicketWorld.WebAPI.IntegrationTests.csproj" />
+  </Folder>
+</Solution>

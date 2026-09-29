@@ -1,0 +1,25 @@
+# Environment Files
+.env
+.env.*
+!.env.example
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Docker persistent volume mounts (if bound to local)
+data/
+*.log
+
+# .NET
+[Bb]in/
+[Oo]bj/
+.vs/
+
+# Node & Frontend
+node_modules/
+dist/
+.angular/
+
