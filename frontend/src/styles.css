@@ -6,4 +6,55 @@
   body {
     @apply bg-surface-50 text-neutral-800 antialiased font-sans;
   }
+
+  ::selection {
+    @apply bg-emerald-500/20 text-emerald-900;
+  }
+
+  /* Browser Surfaces - Craft Floor Palette Integration */
+  :root {
+    caret-color: #22c55e;
+  }
+}
+
+/* Accessible prefers-reduced-motion: Intentional reduction preserving state feedback */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse {
+    animation: none !important;
+    opacity: 0.9 !important;
+  }
+  .transition-all,
+  .transition-colors,
+  .transition-transform,
+  .transition-opacity {
+    transition-duration: 0.05s !important;
+  }
+}
+
+/* 45° Diagonal Hatch Pattern Utility from DESIGN.md */
+.bg-hatch-pattern {
+  background-color: #F1F5F9;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(148, 163, 184, 0.45),
+    rgba(148, 163, 184, 0.45) 1.5px,
+    transparent 1.5px,
+    transparent 5.5px
+  );
+}
+
+/* Custom Slim Scrollbar for sidebars and tables */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.55);
 }

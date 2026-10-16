@@ -1,86 +1,77 @@
 import { Routes } from '@angular/router';
+import { CustomerLayoutComponent } from './shared/layouts/customer-layout/customer-layout.component';
+import { OrganizerLayoutComponent } from './shared/layouts/organizer-layout/organizer-layout.component';
 
 export const routes: Routes = [
-  // Customer Portal
+  // 1. หมวด Customer (Customer Pages with CustomerLayout & Navbar)
   {
     path: '',
-    loadComponent: () => import('./portals/customer/discovery/discovery.component').then(m => m.DiscoveryComponent)
-  },
-  {
-    path: 'waiting-room/:eventId',
-    loadComponent: () => import('./portals/customer/waiting-room/waiting-room.component').then(m => m.WaitingRoomComponent)
-  },
-  {
-    path: 'seat-selection/:eventId',
-    loadComponent: () => import('./portals/customer/seat-selection/seat-selection.component').then(m => m.SeatSelectionComponent)
-  },
-  {
-    path: 'checkout',
-    loadComponent: () => import('./portals/customer/checkout/checkout.component').then(m => m.CheckoutComponent)
-  },
-  {
-    path: 'my-tickets',
-    loadComponent: () => import('./portals/customer/my-tickets/my-tickets.component').then(m => m.MyTicketsComponent)
-  },
-
-  // Organizer Portal
-  {
-    path: 'organizer',
+    component: CustomerLayoutComponent,
     children: [
       {
         path: '',
-        loadComponent: () => import('./portals/organizer/dashboard/dashboard.component').then(m => m.OrganizerDashboardComponent)
+        loadComponent: () =>
+          import('./pages/customer/customer.component').then(m => m.CustomerComponent)
+      }
+    ]
+  },
+
+  // 2. หมวด Organizer (Organizer Pages - ใช้งานร่วมกับ Sidebar Component)
+  {
+    path: 'organizer',
+    component: OrganizerLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./pages/organizer/organizer.component').then(m => m.OrganizerComponent)
       },
       {
         path: 'events',
-        loadComponent: () => import('./portals/organizer/event-management/event-management.component').then(m => m.EventManagementComponent)
+        loadComponent: () =>
+          import('./pages/organizer/events/events.component').then(m => m.OrganizerEventsComponent)
       },
       {
         path: 'events/create',
-        loadComponent: () => import('./portals/organizer/event-management/event-management.component').then(m => m.EventManagementComponent)
+        loadComponent: () =>
+          import('./pages/organizer/events/events.component').then(m => m.OrganizerEventsComponent)
       },
       {
         path: 'seat-map',
-        loadComponent: () => import('./portals/organizer/seat-map-builder/seat-map-builder.component').then(m => m.SeatMapBuilderComponent)
-      },
-      {
-        path: 'staff',
-        loadComponent: () => import('./portals/organizer/staff-management/staff-management.component').then(m => m.StaffManagementComponent)
+        loadComponent: () =>
+          import('./pages/organizer/seat-map/seat-map.component').then(m => m.OrganizerSeatMapComponent)
       },
       {
         path: 'checkin',
-        loadComponent: () => import('./portals/organizer/checkin-scanner/checkin-scanner.component').then(m => m.CheckinScannerComponent)
+        loadComponent: () =>
+          import('./pages/organizer/checkin/checkin.component').then(m => m.OrganizerCheckinComponent)
+      },
+      {
+        path: 'staff',
+        loadComponent: () =>
+          import('./pages/organizer/staff/staff.component').then(m => m.OrganizerStaffComponent)
       }
     ]
   },
 
-  // Platform Admin Portal
+  // 3. หมวด Developer (Developer Tools & Sandbox)
   {
-    path: 'admin',
-    children: [
-      {
-        path: '',
-        loadComponent: () => import('./portals/admin/event-moderation/event-moderation.component').then(m => m.EventModerationComponent)
-      },
-      {
-        path: 'moderation',
-        loadComponent: () => import('./portals/admin/event-moderation/event-moderation.component').then(m => m.EventModerationComponent)
-      },
-      {
-        path: 'payouts',
-        loadComponent: () => import('./portals/admin/finance-payouts/finance-payouts.component').then(m => m.FinancePayoutsComponent)
-      },
-      {
-        path: 'audit-logs',
-        loadComponent: () => import('./portals/admin/audit-logs/audit-logs.component').then(m => m.AuditLogsComponent)
-      },
-      {
-        path: 'system-health',
-        loadComponent: () => import('./portals/admin/system-health/system-health.component').then(m => m.SystemHealthComponent)
-      }
-    ]
+    path: 'developer',
+    loadComponent: () =>
+      import('./pages/developer/developer.component').then(m => m.DeveloperComponent)
+  },
+  {
+    path: 'dev',
+    redirectTo: 'developer',
+    pathMatch: 'full'
+  },
+  {
+    path: 'test-uxui',
+    redirectTo: 'developer',
+    pathMatch: 'full'
   },
 
+  // Fallback wildcard
   {
     path: '**',
     redirectTo: ''

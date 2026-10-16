@@ -23,3 +23,8 @@ node_modules/
 dist/
 .angular/
 
+# Agent caches & tool binaries
+.opencode/
+.impeccable/
+
+
