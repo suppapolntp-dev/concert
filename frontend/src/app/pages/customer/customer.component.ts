@@ -1,22 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, signal } from '@angular/core';
-
-interface EventCard {
-  title: string;
-  artist: string;
-  venue: string;
-  day: string;
-  month: string;
-  category: string;
-  price: number;
-  image: string;
-  tag?: string;
-}
+import { Component, computed, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
+import { EventCardComponent, EventCardData } from '../../shared/components/event-card/event-card.component';
 
 @Component({
   selector: 'app-customer-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, EventCardComponent],
   template: `
     <div class="home-shell">
       <section class="welcome-row">
@@ -50,10 +40,7 @@ interface EventCard {
         </div>
         <div id="events" class="event-grid">
           @for (event of filteredEvents(); track event.title) {
-            <article class="event-card"><a class="event-image-link" href="/events"><div class="event-image" [style.background-image]="'url(' + event.image + ')'"><span class="event-image-shade"></span>
-              @if (event.tag) { <span class="event-tag">{{ event.tag }}</span> }
-              <div class="date-badge"><b>{{ event.day }}</b><small>{{ event.month }}</small></div>
-            </div></a><div class="event-details"><span class="event-category">{{ event.category }}</span><h3>{{ event.title }}</h3><p class="artist-name">{{ event.artist }}</p><div class="event-bottom"><span class="venue">⌖ &nbsp;{{ event.venue }}</span><span class="price">from <b>฿{{ event.price | number }}</b></span></div></div></article>
+            <app-event-card [event]="event" (cardClick)="onEventSelect($event)" />
           } @empty { <div class="empty-state"><span>⌕</span><h3>No shows found just yet.</h3><p>Try another search or category — your next night out is out there.</p><button type="button" (click)="query.set(''); activeCategory.set('All events')">Clear filters</button></div> }
         </div>
       </section>
@@ -64,10 +51,11 @@ interface EventCard {
   styleUrl: './customer.component.css'
 })
 export class CustomerComponent {
+  private readonly router = inject(Router);
   query = signal('');
   activeCategory = signal('All events');
   readonly categories = ['All events', 'Concerts', 'Festivals', 'Live music', 'Theatre', 'Comedy'];
-  readonly events: EventCard[] = [
+  readonly events: EventCardData[] = [
     { title: 'The Eras of Us', artist: 'NONT TANONT', venue: 'IMPACT Arena', day: '21', month: 'NOV', category: 'Concerts', price: 2500, image: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=80', tag: 'SELLING FAST' },
     { title: 'Neon Garden Festival', artist: 'A weekend under the lights', venue: 'Rajamangala Stadium', day: '28', month: 'NOV', category: 'Festivals', price: 1800, image: 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=900&q=80', tag: '2-DAY FESTIVAL' },
     { title: 'An Evening in Bloom', artist: 'INK WARUNTORN', venue: 'Queen Sirikit Convention Centre', day: '05', month: 'DEC', category: 'Live music', price: 1200, image: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=900&q=80' },
@@ -85,5 +73,10 @@ export class CustomerComponent {
   });
   scrollToResults(): void {
     document.getElementById('events')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  onEventSelect(event: EventCardData): void {
+    // Navigate to event or open details
+    this.router.navigate(['/events']);
   }
 }

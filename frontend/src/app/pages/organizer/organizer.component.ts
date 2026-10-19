@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { MetricCardComponent, MetricCardData } from '../../shared/components/metric-card/metric-card.component';
 
 @Component({
   selector: 'app-organizer-dashboard-page',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, MetricCardComponent],
   template: `
     <div class="space-y-6">
       <!-- 1. Header Hero Card (Clean Bento Module, Zero Status Pills) -->
@@ -35,79 +36,58 @@ import { RouterLink } from '@angular/router';
         </div>
       </div>
 
-      <!-- 2. Bento Grid KPI Metrics (Inter, tabular-nums, Clean SVG Icons, Zero Badges) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <!-- Metric 1: Total Gross Revenue -->
-        <div
-          class="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-[0_1px_3px_0_rgba(15,23,42,0.03),0_6px_16px_-4px_rgba(15,23,42,0.04)] flex flex-col justify-between"
-        >
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Gross</span>
-            <div class="w-8 h-8 rounded-xl bg-[#D7F4DF] text-[#006e2f] flex items-center justify-center">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="12" y1="1" x2="12" y2="23"/>
-                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-              </svg>
-            </div>
+      <!-- 2. Mindful Metrics Grid (Freud v2 Pattern Adapted for Concert Operations) -->
+      <div class="space-y-3">
+        <!-- Telemetry Controls Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-1">
+          <div class="flex items-center gap-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Live Telemetry Metrics</span>
           </div>
-          <div>
-            <div class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight tabular-nums">฿14,280,000</div>
-            <div class="text-xs text-slate-500 mt-1 font-medium">94.8% of aggregate event target</div>
+
+          <!-- Time Range Filter Pills (Glanceable / Interactive) -->
+          <div class="inline-flex items-center p-1 bg-slate-100 rounded-xl border border-slate-200/60 self-start sm:self-auto">
+            <button
+              type="button"
+              (click)="selectedPeriod = 'realtime'"
+              [class.bg-white]="selectedPeriod === 'realtime'"
+              [class.text-slate-900]="selectedPeriod === 'realtime'"
+              [class.shadow-xs]="selectedPeriod === 'realtime'"
+              [class.text-slate-500]="selectedPeriod !== 'realtime'"
+              class="px-2.5 py-1 text-[11px] font-semibold rounded-lg transition-all"
+            >
+              Realtime
+            </button>
+            <button
+              type="button"
+              (click)="selectedPeriod = 'today'"
+              [class.bg-white]="selectedPeriod === 'today'"
+              [class.text-slate-900]="selectedPeriod === 'today'"
+              [class.shadow-xs]="selectedPeriod === 'today'"
+              [class.text-slate-500]="selectedPeriod !== 'today'"
+              class="px-2.5 py-1 text-[11px] font-semibold rounded-lg transition-all"
+            >
+              Today
+            </button>
+            <button
+              type="button"
+              (click)="selectedPeriod = 'tour'"
+              [class.bg-white]="selectedPeriod === 'tour'"
+              [class.text-slate-900]="selectedPeriod === 'tour'"
+              [class.shadow-xs]="selectedPeriod === 'tour'"
+              [class.text-slate-500]="selectedPeriod !== 'tour'"
+              class="px-2.5 py-1 text-[11px] font-semibold rounded-lg transition-all"
+            >
+              Tour Total
+            </button>
           </div>
         </div>
 
-        <!-- Metric 2: Live Ingress Check-in -->
-        <div
-          class="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-[0_1px_3px_0_rgba(15,23,42,0.03),0_6px_16px_-4px_rgba(15,23,42,0.04)] flex flex-col justify-between"
-        >
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Gate Check-in</span>
-            <div class="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16v3a2 2 0 0 1-2 2h-3M21 21v.01M12 7v3a2 2 0 0 1-2 2H7"/>
-              </svg>
-            </div>
-          </div>
-          <div>
-            <div class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight tabular-nums">18,450 / 22,000</div>
-            <div class="text-xs text-slate-500 mt-1 font-medium">83.8% scanned through main turnstiles</div>
-          </div>
-        </div>
-
-        <!-- Metric 3: Active Holdouts & Queue -->
-        <div
-          class="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-[0_1px_3px_0_rgba(15,23,42,0.03),0_6px_16px_-4px_rgba(15,23,42,0.04)] flex flex-col justify-between"
-        >
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Inventory Holds</span>
-            <div class="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>
-              </svg>
-            </div>
-          </div>
-          <div>
-            <div class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight tabular-nums">412 Seats</div>
-            <div class="text-xs text-slate-500 mt-1 font-medium">Temporary 10-minute cart locks</div>
-          </div>
-        </div>
-
-        <!-- Metric 4: Operational Staff -->
-        <div
-          class="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-[0_1px_3px_0_rgba(15,23,42,0.03),0_6px_16px_-4px_rgba(15,23,42,0.04)] flex flex-col justify-between"
-        >
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Staff Active</span>
-            <div class="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>
-              </svg>
-            </div>
-          </div>
-          <div>
-            <div class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight tabular-nums">48 Personnel</div>
-            <div class="text-xs text-slate-500 mt-1 font-medium">Assigned across 6 stadium zones</div>
-          </div>
+        <!-- 4 Reusable Metric Cards (Clean Architecture) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-5">
+          @for (metric of metrics; track metric.id) {
+            <app-metric-card [cardData]="metric" />
+          }
         </div>
       </div>
 
@@ -172,4 +152,80 @@ import { RouterLink } from '@angular/router';
     </div>
   `
 })
-export class OrganizerComponent {}
+export class OrganizerComponent {
+  selectedPeriod: 'realtime' | 'today' | 'tour' = 'realtime';
+
+  metrics: MetricCardData[] = [
+    {
+      id: 'gross-revenue',
+      title: 'Gross Revenue',
+      subtitle: 'Ticket sales aggregate',
+      value: '฿14,280,000',
+      badgeText: 'Target 95%',
+      trendText: '+14.2%',
+      trendDirection: 'up',
+      qualitativeText: 'Pacing ahead of target projection',
+      insightText: 'VIP velocity +22% after stage plan release',
+      linkUrl: '/organizer/events',
+      linkTitle: 'View event revenue breakdown',
+      theme: 'emerald',
+      chartType: 'sparkline-revenue',
+      iconType: 'currency',
+      timeAxisLabels: ['Presale', 'Early', 'General', 'VIP', 'Door']
+    },
+    {
+      id: 'gate-checkin',
+      title: 'Gate Check-in',
+      subtitle: 'Turnstile ingress pace',
+      value: '18,450',
+      unit: '/ 22k',
+      badgeText: 'Live Sync',
+      trendText: '+8.2%/h',
+      trendDirection: 'up',
+      qualitativeText: 'Fluid ingress • 83.8% scanned through',
+      insightText: 'Turnstile B & West corridor moving smoothly',
+      linkUrl: '/organizer/checkin',
+      linkTitle: 'View turnstile terminal',
+      theme: 'indigo',
+      chartType: 'bars-checkin',
+      iconType: 'scanner',
+      timeAxisLabels: ['16:00', '17:00', '18:00', '19:00', '20:00', 'Now']
+    },
+    {
+      id: 'inventory-holds',
+      title: 'Inventory Holds',
+      subtitle: 'Cart reservations buffer',
+      value: '412',
+      unit: 'Seats',
+      badgeText: '10m TTL',
+      trendText: 'Stable',
+      trendDirection: 'neutral',
+      qualitativeText: 'Balanced rotation • 96.4% checkout lock rate',
+      insightText: 'Expired holds smoothly recirculated within 400ms',
+      linkUrl: '/organizer/seat-map',
+      linkTitle: 'View seat map inventory',
+      theme: 'amber',
+      chartType: 'wave-hold',
+      iconType: 'seats',
+      timeAxisLabels: ['10m', '8m', '6m', '4m', '2m', 'Now']
+    },
+    {
+      id: 'staff-active',
+      title: 'Staff Active',
+      subtitle: 'Zone delegations & safety',
+      value: '48',
+      unit: 'Personnel',
+      badgeText: '6/6 Zones',
+      trendText: '100% Ready',
+      trendDirection: 'neutral',
+      qualitativeText: 'Full zone perimeter coverage',
+      insightText: 'Turnstile stations fully staffed for evening rush',
+      linkUrl: '/organizer/staff',
+      linkTitle: 'View staff allocations',
+      theme: 'slate',
+      chartType: 'meter-staff',
+      iconType: 'staff',
+      timeAxisLabels: ['Gate A', 'Gate B', 'VIP', 'Floor', 'Sec']
+    }
+  ];
+}
